@@ -11,35 +11,23 @@ int main (int argc, char **argv) {
    return arg * pow(10 , -(*exp));    
   */
 
-  typedef union {
-    double d;
-    struct {
-      uint64_t mantissa : 52;
-      uint64_t expo : 11;
-      uint64_t sign : 1;
-    } parts;
-    long int binary;
-  } doubleBits;
-
-  doubleBits bitInterpreation;
   double value;
-  int exponent;
+  int    exponent;
   double mantissa;
+  int    intMantissa;
 
-  bitInterpreation.d = value = atof(argv[1]);
+  value = atof(argv[1]);
 
   printf ("value: %g \n", value);
 
-  exponent = (value == 0) ? 0 : (int)(1 + log10(fabs(value)));
+  exponent = (value == 0) ? 0 : (int)(/* 1 */ -9 + log10(fabs(value)));
   mantissa = value * pow(10,-(exponent));
+  intMantissa = mantissa;
 
-  printf ("exponent: %d \n", exponent);
-  printf ("mantissa: %g \n", mantissa);
-  
-  printf ("bitInterpreation.binary: 0x%lx \n",
-	  bitInterpreation.binary);
-
-  printf ("bitInterpreation.mantissa: %d \n",
-	  bitInterpreation.parts.mantissa);
+  printf ("exponent:    %d \n",   exponent);
+  printf ("exponent:    0x%8x \n", exponent);
+  printf ("mantissa:    %g \n",   mantissa);
+  printf ("intMantissa: %d \n",   intMantissa);
+  printf ("intMantissa: 0x%8x \n", intMantissa);
 
 }
